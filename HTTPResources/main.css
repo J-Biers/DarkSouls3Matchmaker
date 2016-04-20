@@ -138,4 +138,21 @@ p {
 	position:relative;
 	top:1px;
 }
-
+.transbox {
+	background-color:rgba(0, 0, 0, .5);
+	box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.501);
+   	color:white;
+  	border-bottom-style:solid;
+  	border-top-style:none;
+  	border-left-style:none;
+  	border-right-style:none;
+  	outline:none;
+  	height:30px;
+  	width:200px;
+	transition:height 1s;
+ 	-webkit-transition:height 1s;
+ 	font-family:DarkSouls;
+ 	font-size:16px;
+ 	text-align:center;
+		
+}

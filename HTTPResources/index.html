@@ -7,11 +7,11 @@
 		</script>
 		<script>
 			$(document).ready(function(){
-				$("#hp").click(function() {
-					$("#area").slideDown();	
+			        $("#name").click(function() {
+					$("#host").slideDown();	
 				});
-				$("#hp2").click(function() {
-					$("#area").slideDown();
+				$("#host").click(function() {
+					$("#area").slideDown();	
 				});
 				$("#checkall").change(function () {
     					$("input:checkbox").prop('checked', $(this).prop("checked"));
@@ -26,9 +26,15 @@
 		<div class="dark-container">
 			<h1>Dark Souls III Matchmaking Service</h1>		
          	 	<form action="action_page.php">
-         	 		<h3>Are you a host? Or a phantom?</h2>
- 				<input type="radio" name="clientType" value="Host" id="hp"> Host<br>
-  				<input type="radio" name="clientType" value="Phantom" id="hp2"> Phantom<br>
+         	 	        <div id="name">
+         	 	              <h3>Enter your Name</h3>
+         	 	              <input type="text" name="name" id="name" class="transbox"><br>
+         	 	        </div>
+         	 	        <div id="host" style="display:none">
+         	 		      <h3>Are you a host or a phantom?</h2>
+ 				      <input type="radio" name="clientType" value="Host" id="hp"> Host<br>
+  				      <input type="radio" name="clientType" value="Phantom" id="hp2"> Phantom<br>
+  				</div>
   			
   				<div id="area" style="display:none">
   					<h3>Please select the areas you would like to play in</h3>
