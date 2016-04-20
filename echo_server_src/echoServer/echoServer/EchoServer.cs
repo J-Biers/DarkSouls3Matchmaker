@@ -43,20 +43,19 @@ namespace echoServer
                 HttpListenerContext context = listener.GetContext();
 
                 //Display context information
-                Console.WriteLine("Received connection from " + context.User.ToString());
-                Console.WriteLine("Request: " + context.Request.ToString());
+                Console.WriteLine("Got connection.  Query: " + context.Request.QueryString.ToString());
 
                 //Build a JSON object from the query string
                 StringBuilder json = new StringBuilder();
-                json.Append("{\n\t");
+                json.Append("{");
                 foreach (string key in context.Request.QueryString.Keys)
                 {
+                    json.Append("\n\t");
                     json.Append(key);
                     json.Append(':');
                     json.Append(context.Request.QueryString[key]);
-                    json.Append("\n\t");
                 }
-                json.Append("}");
+                json.Append("\n}");
 
                 //Send the json object
                 byte[] buffer = Encoding.ASCII.GetBytes(json.ToString());
