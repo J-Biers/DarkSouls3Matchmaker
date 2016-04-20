@@ -5,13 +5,35 @@
 		<link rel="stylesheet" href="main.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
 		</script>
+		<script>
+			$(document).ready(function(){
+				$("#hp").click(function() {
+					$("#area").slideDown();	
+				});
+				$("#hp2").click(function() {
+					$("#area").slideDown();
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<h1>Dark Souls III Matchmaking Service</h1>
 		<form action="action_page.php">
 			<h3>Are you a host? Or a phantom?</h2>
 			<input type="radio" name="clientType" value="Host" id="hp"> Host<br>
-  			<input type="radio" name="clientType" value="Phantom" id="hp2"> 
+  			<input type="radio" name="clientType" value="Phantom" id="hp2">Phantom<br>
+  			<div id="area" style="display:none">
+  				<div class="cemetary-of-ash">
+  					<div class="dark">
+  						<h4>Cemetary of Ash</h4>
+  						<input type="checkbox" name="bonfire1" value="Firelink Shrine"> Firelink Shrine<br>
+  						<input type="checkbox" name="bonfire2" value="Cemetary of Ash"> Cemetary of Ash<br>
+  						<input type="checkbox" name="bonfire3" value="Iudex Gundyr"> Iudex Gundyr<br>
+  						<input type="checkbox" name="bonfire4" value="Untended Graves"> Untended Graves<br>
+  						<input type="checkbox" name="bonfire5" value="Champion Gundyr"> Champion Gundyr<br>
+  					</div>
+  				</div>
+  			</div>
 		</form>
 	</body>
 </html>
