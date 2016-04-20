@@ -12,14 +12,59 @@ namespace echoServer
     {
         public HttpListener listener = new HttpListener();
 
+        private int port;
+
         public static void Main(string[] args)
         {
-            EchoServer server = new EchoServer();
+            EchoServer server = new EchoServer(22475);
+            server.Start();
+        }
+
+        public EchoServer(int port)
+        {
+            //Construct echo server
+            this.port = port;
         }
 
         public void Start()
         {
             //TODO: Start listening and echoing
+
+            //Set the port number to be listening on
+            listener.Prefixes.Add("http://*:" + port + "/");
+
+            //Start listening
+            listener.Start();
+            while (listener.IsListening)
+            {
+                //Get a connection
+                Console.WriteLine("Waiting for connection");
+
+                HttpListenerContext context = listener.GetContext();
+
+                //Display context information
+                Console.WriteLine("Received connection from " + context.User.ToString());
+                Console.WriteLine("Request: " + context.Request.ToString());
+
+                //Build a JSON object from the query string
+                StringBuilder json = new StringBuilder();
+                json.Append("{\n\t");
+                foreach (string key in context.Request.QueryString.Keys)
+                {
+                    json.Append(key);
+                    json.Append(':');
+                    json.Append(context.Request.QueryString[key]);
+                    json.Append("\n\t");
+                }
+                json.Append("}");
+
+                //Send the json object
+                byte[] buffer = Encoding.ASCII.GetBytes(json.ToString());
+                context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+
+                //Close the connection
+                context.Response.Close();
+            }
         }
     }
 }
