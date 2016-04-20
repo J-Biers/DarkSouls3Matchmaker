@@ -1,27 +1,206 @@
 <!DOCTYPE html>
 <html>
-
-  <head>
-    <title>NodeJS Starter Application</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="stylesheets/style.css">
-  </head>
-
-  <body>
-    <table>
-      <tr>
-        <td style= "width:30%;">
-          <img class = "newappIcon" src="images/newapp-icon.png">
-        <td>
-            <h1>Hi there!</h1>
-          <p>Thanks for creating a
-            <span class = "blue">NodeJS Starter Application</span>.
-            Get started by reading our
-            <a href = "https://www.ng.bluemix.net/docs/#runtimes/nodejs/index.html">documentation</a>
-            or use the Start Coding guide under your app in your dashboard.
-    </table>
-  </body>
-
+	<head>
+		<title>Dark Souls III Matchmaking Service</title>
+		<link rel="stylesheet" href="main.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
+		</script>
+		<script>
+			$(document).ready(function(){
+			        $("#name").click(function() {
+					$("#host").slideDown();	
+				});
+				$("#host").click(function() {
+					$("#area").slideDown();	
+				});
+				$("#checkall").change(function () {
+    					$("input:checkbox").prop('checked', $(this).prop("checked"));
+				});
+				$("#area").click(function() {
+			            $("#submit").fadeIn(); 
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="dark-container">
+			<h1>Dark Souls III Matchmaking Service</h1>		
+			<form method="GET" action="/public/test.html">
+         	 	<!--<form method="post" action="mailto:biermanj@purdue.edu.">-->
+         	 	        <div id="name">
+         	 	              <h3>Enter your Name</h3>
+         	 	              <input type="text" name="name" id="name" class="transbox"><br>
+         	 	        </div>
+         	 	        <div id="host" style="display:none">
+         	 		      <h3>Are you a host or a phantom?</h2>
+ 				      <input type="radio" name="clientType" value="Host" id="hp"> Host<br>
+  				      <input type="radio" name="clientType" value="Phantom" id="hp2"> Phantom<br>
+  				</div>
+  			
+  				<div id="area" style="display:none">
+  					<h3>Please select the areas you would like to play in</h3>
+  					<input type="checkbox" id="checkall"> Check All<br><br>
+  					
+  					<div class="cemetary-of-ash">
+  						<br>
+  						<br>
+  						<div class="dark">
+  							<h4>Cemetary of Ash</h4>
+  							<div class="bonfire">
+  							      <input type="checkbox" name="bonfire1" value="TRUE"> Firelink Shrine<br>
+  							      <input type="checkbox" name="bonfire2" value="TRUE"> Cemetary of Ash<br>
+  							      <input type="checkbox" name="bonfire3" value="TRUE"> Iudex Gundyr<br>
+  							      <input type="checkbox" name="bonfire4" value="TRUE"> Untended Graves<br>
+  							      <input type="checkbox" name="bonfire5" value="TRUE"> Champion Gundyr<br>
+  							</div>
+  						</div>
+  						<br><br><br>
+  					</div>
+  					
+  					<div class="high-wall-of-lothric">
+  						<br><br>
+  						<div class="dark">
+  							<h4>High Wall of Lothric</h4>
+  							<input type="checkbox" name="bonfire6" value="TRUE"> High Wall of Lothric<br>
+  							<input type="checkbox" name="bonfire7" value="TRUE"> Tower on the Wall<br>
+  							<input type="checkbox" name="bonfire8" value="TRUE"> Vordt of the Boreal Valley<br>
+  							<input type="checkbox" name="bonfire9" value="TRUE"> Dancer of the Boreal Valley<br>
+  							<input type="checkbox" name="bonfire10" value="TRUE"> Oceiros, the Consumed King<br>
+  						</div>
+  						<br><br><br>
+  					</div>
+  					
+  					<div class="undead-settlement">
+  						<br><br>
+  						<div class="dark">
+  							<h4>Undead Settlement</h4>
+  							<input type="checkbox" name="bonfire11" value="TRUE"> Foot of the High Wall<br>
+  							<input type="checkbox" name="bonfire12" value="TRUE"> Undead Settlement<br>
+  							<input type="checkbox" name="bonfire13" value="TRUE"> Cliff Underside<br>
+  							<input type="checkbox" name="bonfire14" value="TRUE"> Dilapidated Bridge<br>
+  							<input type="checkbox" name="bonfire15" value="TRUE"> Pit of Hollows<br>
+  						</div>
+  						<br><br><br>
+  					</div>
+  					
+  					<div class="road-of-sacrifices">
+  						<br><br>
+  						<div class="dark">
+  							<h4>Road of Sacrifices</h4>
+  							<input type="checkbox" name="bonfire16" value="TRUE"> Road of Sacrifices<br>
+  							<input type="checkbox" name="bonfire17" value="TRUE"> Halfway Fortress<br>
+  							<input type="checkbox" name="bonfire18" value="TRUE"> Crucifixion Woods<br>
+  							<input type="checkbox" name="bonfire19" value="TRUE"> Crystal Sage<br>
+  							<input type="checkbox" name="bonfire20" value="TRUE"> Farron Keep<br>
+  							<input type="checkbox" name="bonfire21" value="TRUE"> Keep Ruins<br>
+  							<input type="checkbox" name="bonfire22" value="TRUE"> Farron Keep Perimeter<br>
+  							<input type="checkbox" name="bonfire23" value="TRUE"> Old Wolf of Farron<br>
+  							<input type="checkbox" name="bonfire24" value="TRUE"> Abyss Watchers<br>
+  						</div>
+  						<br><br><br>
+  					</div>
+  					
+  					
+  					<div class="cathedral-of-the-deep">
+  						<br><br>
+  						<div class="dark">
+  							<h4>Cathedral of the Deep</h4>
+  							<input type="checkbox" name="bonfire25" value="TRUE"> Cathedral of the Deep<br>
+  							<input type="checkbox" name="bonfire26" value="TRUE"> Cleansing Chapel<br>
+  							<input type="checkbox" name="bonfire27" value="TRUE"> Rosaria's Bed Chamber<br>
+  							<input type="checkbox" name="bonfire28" value="TRUE"> Deacons of the Deep<br>
+  						</div>
+  						<br><br><br>
+  					</div>
+  					
+  					
+  					<div class="catacombs-of-carthus">
+  						<br><br>
+  						<div class=dark>
+  							<h4>Catacombs of Carthus</h4>
+  							<input type="checkbox" name="bonfire29" value="TRUE"> Catacombs of Carthus<br>
+  							<input type="checkbox" name="bonfire30" value="TRUE"> High Lord Wolnir<br>
+  							<input type="checkbox" name="bonfire31" value="TRUE"> Abandoned Tomb<br>
+  							<input type="checkbox" name="bonfire32" value="TRUE"> Old King's Antechamber<br>
+  							<input type="checkbox" name="bonfire33" value="TRUE"> Demon Ruins<br>
+  							<input type="checkbox" name="bonfire34" value="TRUE"> Old Demon King<br>
+  						</div>
+  						<br><br><br>
+  					</div>
+  					
+  					
+  					<div class="valley">
+  						<br><br>
+  						<div class="dark">
+  							<h4>Irithyll of the Boreal Valley</h4>
+  							<input type="checkbox" name="bonfire35" value="TRUE"> Irithyll of the Boreal Valley<br>
+  							<input type="checkbox" name="bonfire36" value="TRUE"> Central Irithyll<br>
+  							<input type="checkbox" name="bonfire37" value="TRUE"> Church of Yorshka<br>
+  							<input type="checkbox" name="bonfire38" value="TRUE"> Old Demon King<br>
+  							<input type="checkbox" name="bonfire39" value="TRUE"> Distant Manor<br>
+  							<input type="checkbox" name="bonfire40" value="TRUE"> Pontiff Sulyvahn<br>
+  							<input type="checkbox" name="bonfire41" value="TRUE"> Water Reserve<br>
+  							<input type="checkbox" name="bonfire42" value="TRUE"> Anor Londo<br>
+  							<input type="checkbox" name="bonfire43" value="TRUE"> Prison Tower<br>
+  							<input type="checkbox" name="bonfire44" value="TRUE"> Aldrich, Devourer of Gods<br>
+  						</div>
+  						<br><br><br>
+  					</div>
+  					
+  					
+  					
+  					<div class="dungeon">
+  						<br><br>
+  						<div class="dark">
+  							<h4>Irithyll Dungeon</h4>
+  							<input type="checkbox" name="bonfire45" value="TRUE"> Irithyll Dungeon<br>
+  							<input type="checkbox" name="bonfire46" value="TRUE"> Profaned Capital<br>
+  							<input type="checkbox" name="bonfire47" value="TRUE"> Yhorm the Giant<br>
+  						</div>
+  						<br><br><br>
+  					</div>
+  				
+  					<div class="castle">
+  						<br><br>
+  						<div class="dark">
+  							<h4>Lothric Castle</h4>
+  							<input type="checkbox" name="bonfire48" value="TRUE"> Lothric Castle<br>
+  							<input type="checkbox" name="bonfire49" value="TRUE"> Dragon Barracks<br>
+  							<input type="checkbox" name="bonfire50" value="TRUE"> Dragonslayer Armor<br>
+  							<input type="checkbox" name="bonfire51" value="TRUE"> Grand Archives<br>
+  							<input type="checkbox" name="bonfire52" value="TRUE"> Twin Princes<br>
+  						</div>
+  						<br><br><br>
+  					</div>
+  					
+  					
+  					<div class="peak">
+  						<br><br>
+  						<div class="dark">
+  							<h4>Archdragon Peak</h4>
+  							<input type="checkbox" name="bonfire53" value="TRUE"> Archdragon Peak<br>
+  							<input type="checkbox" name="bonfire54" value="TRUE"> Dragon-Kin Mausoleum<br>
+  							<input type="checkbox" name="bonfire55" value="TRUE"> Great Belfry<br>
+  							<input type="checkbox" name="bonfire56" value="TRUE"> Nameless King<br>
+  						</div>
+  						<br><br><br>
+  					</div>
+  				
+  					<div class="kiln">
+  						<br><br>
+  						<div class="dark">
+  							<h4>Kiln of the First Flame</h4>
+  							<input type="checkbox" name="bonfire57" value="TRUE"> Flameless Shrine<br>
+  							<input type="checkbox" name="bonfire58" value="TRUE"> Kiln of the First Flame<br>
+  						</div>
+  						<br><br><br>
+  					</div>
+				</div><!--End of the "area" div-->
+				<br><br>
+			        <input type="submit" class="myButton" id="submit" style="display:none" />
+			        <br><br>
+			</form>
+			
+		</div>
+	</body>
 </html>

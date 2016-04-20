@@ -1,0 +1,157 @@
+@font-face {
+    font-family: 'DarkSouls';
+    src: url('OptimusPrinceps.ttf'); 
+}
+body {
+	background-image: url(images/background.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: black;
+	text-align: center;
+	font-family: 'DarkSouls';
+	color: white;
+}
+h1 {
+	font-family: 'DarkSouls';
+	color: white;
+	text-transform: uppercase;
+}
+h3 {
+	font-family: 'DarkSouls';
+	color: white;
+	text-transform: uppercase;	
+}
+h4 {
+	font-family: 'DarkSouls';
+	color: white;	
+}
+p {
+	color: white;
+	text-transform: uppercase;
+	background-color: rgba(0,0,0,0.5);	
+}
+.dark-container {
+	box-shadow: 0 0 5px 10px rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.5);	
+}
+
+.cemetary-of-ash {
+	background-image: url(images/cemetary.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.high-wall-of-lothric {
+	background-image: url(images/highwalloflothric.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.undead-settlement {
+	background-image: url(images/undeadsettlement.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.road-of-sacrifices {
+	background-image: url(images/roadofsacrifices.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.cathedral-of-the-deep {
+	background-image: url(images/cathedralofthedeep.png);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.catacombs-of-carthus {
+	background-image: url(images/catacombsofcarthus.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.valley {
+	background-image: url(images/valley.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.dungeon {
+	background-image: url(images/dungeon.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.castle {
+	background-image: url(images/castle.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.peak {
+	background-image: url(images/peak.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.kiln {
+	background-image: url(images/kiln.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.dark {
+	height:auto;
+	box-shadow: 0px 0px 30px 30px rgba(0, 0, 0, 0.501);
+	background-color: rgba(0, 0, 0, 0.5);
+	display:inline-block;
+}
+.bonfire {
+	//display:none	
+}
+
+.myButton {
+	-moz-box-shadow: 0px 7px 9px 0px #b0b0b0;
+	-webkit-box-shadow: 0px 7px 9px 0px #b0b0b0;
+	box-shadow: 0px 7px 9px 0px #b0b0b0;
+	background-color:transparent;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	border:3px solid #ffffff;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:DarkSouls;
+	font-size:26px;
+	font-weight:bold;
+	padding:9px 50px;
+	text-decoration:none;
+	//text-shadow:0px 2px 0px #bababa;
+}
+.myButton:hover {
+	background-color:transparent;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+.transbox {
+	background-color:rgba(0, 0, 0, .5);
+	box-shadow: 0px 0px 20px 20px rgba(0, 0, 0, 0.501);
+   	color:white;
+  	border-bottom-style:solid;
+  	border-top-style:none;
+  	border-left-style:none;
+  	border-right-style:none;
+  	outline:none;
+  	height:30px;
+  	width:200px;
+	transition:height 1s;
+ 	-webkit-transition:height 1s;
+ 	font-family:DarkSouls;
+ 	font-size:16px;
+ 	text-align:center;
+}
