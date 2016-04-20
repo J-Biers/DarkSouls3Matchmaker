@@ -1,0 +1,109 @@
+@font-face {
+    font-family: 'DarkSouls';
+    src: url('OptimusPrinceps.ttf'); 
+}
+body {
+	background-image: url(images/background.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: black;
+	text-align: center;
+	font-family: 'DarkSouls';
+	color: white;
+}
+h1 {
+	font-family: 'DarkSouls';
+	color: white;
+	text-transform: uppercase;
+}
+h3 {
+	font-family: 'DarkSouls';
+	color: white;
+	text-transform: uppercase;	
+}
+h4 {
+	font-family: 'DarkSouls';
+	color: white;	
+}
+p {
+	color: white;
+	text-transform: uppercase;
+	background-color: rgba(0,0,0,0.5);	
+}
+.dark-container {
+	box-shadow: 0 0 5px 10px rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.5);	
+}
+.cemetary-of-ash {
+	background-image: url(images/cemetary.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.high-wall-of-lothric {
+	background-image: url(images/highwalloflothric.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.undead-settlement {
+	background-image: url(images/undeadsettlement.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.road-of-sacrifices {
+	background-image: url(images/roadofsacrifices.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.cathedral-of-the-deep {
+	background-image: url(images/cathedralofthedeep.png);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.catacombs-of-carthus {
+	background-image: url(images/catacombsofcarthus.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.valley {
+	background-image: url(images/valley.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.dungeon {
+	background-image: url(images/dungeon.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.castle {
+	background-image: url(images/castle.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.peak {
+	background-image: url(images/peak.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.kiln {
+	background-image: url(images/kiln.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.dark {
+	height:auto;
+	box-shadow: 0px 0px 30px 30px rgba(0, 0, 0, 0.501);
+	background-color: rgba(0, 0, 0, 0.5);
+	display:inline-block;
+}
