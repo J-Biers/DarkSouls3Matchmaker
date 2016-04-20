@@ -13,6 +13,9 @@
 				$("#hp2").click(function() {
 					$("#area").slideDown();
 				});
+				$("#checkall").change(function () {
+    					$("input:checkbox").prop('checked', $(this).prop("checked"));
+				});
 			});
 		</script>
 	</head>
