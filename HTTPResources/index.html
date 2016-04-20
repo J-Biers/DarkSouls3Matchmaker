@@ -16,6 +16,7 @@
 				$("#checkall").change(function () {
     					$("input:checkbox").prop('checked', $(this).prop("checked"));
 				});
+				
 			});
 		</script>
 	</head>
@@ -36,11 +37,13 @@
   						<br>
   						<div class="dark">
   							<h4>Cemetary of Ash</h4>
-  							<input type="checkbox" name="bonfire1" value="Firelink Shrine"> Firelink Shrine<br>
-  							<input type="checkbox" name="bonfire2" value="Cemetary of Ash"> Cemetary of Ash<br>
-  							<input type="checkbox" name="bonfire3" value="Iudex Gundyr"> Iudex Gundyr<br>
-  							<input type="checkbox" name="bonfire4" value="Untended Graves"> Untended Graves<br>
-  							<input type="checkbox" name="bonfire5" value="Champion Gundyr"> Champion Gundyr<br>
+  							<div class="bonfire">
+  							      <input type="checkbox" name="bonfire1" value="Firelink Shrine"> Firelink Shrine<br>
+  							      <input type="checkbox" name="bonfire2" value="Cemetary of Ash"> Cemetary of Ash<br>
+  							      <input type="checkbox" name="bonfire3" value="Iudex Gundyr"> Iudex Gundyr<br>
+  							      <input type="checkbox" name="bonfire4" value="Untended Graves"> Untended Graves<br>
+  							      <input type="checkbox" name="bonfire5" value="Champion Gundyr"> Champion Gundyr<br>
+  							</div>
   						</div>
   						<br><br><br>
   					</div>
@@ -185,6 +188,9 @@
   					</div>
 				</div><!--End of the "area" div-->
 			</form>
+			<br><br>
+			<a href="#" class="myButton">Submit</a>
+			<br><br>
 		</div>
 	</body>
 </html>
