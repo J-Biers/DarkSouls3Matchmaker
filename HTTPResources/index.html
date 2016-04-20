@@ -16,7 +16,9 @@
 				$("#checkall").change(function () {
     					$("input:checkbox").prop('checked', $(this).prop("checked"));
 				});
-				
+				$("#area").click(function() {
+			            $("#submit").fadeIn(); 
+				});
 			});
 		</script>
 	</head>
@@ -189,7 +191,7 @@
 				</div><!--End of the "area" div-->
 			</form>
 			<br><br>
-			<a href="#" class="myButton">Submit</a>
+			<a class="myButton" id="submit" style="display:none">Submit</a>
 			<br><br>
 		</div>
 	</body>
