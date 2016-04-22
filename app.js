@@ -4,11 +4,27 @@
 // node.js starter application for Bluemix
 //------------------------------------------------------------------------------
 
-//Requires
+/*---Requires---*/
 
 var express = require('express');	// This application uses express as its web server.  For more info, see: http://expressjs.com
 var cfenv = require('cfenv'); 		// cfenv provides access to your Cloud Foundry environment. For more info, see: https://www.npmjs.com/package/cfenv
 
+var mysql = require('mysql');
+
+
+/*---code---*/
+
+//Connect to mysql
+var dbConnection = mysql.createConnection(
+{
+	host     : 'us-cdbr-iron-east-03.cleardb.net',
+	user     : 'b40e8494d3bfb7',
+	password : '91e02fa1',
+});
+dbConnection.connect(function(err)
+{
+	console.log("Connected to cleardb");
+});
 
 // create a new express server
 var app = express();
