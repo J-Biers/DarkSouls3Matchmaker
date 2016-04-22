@@ -24,6 +24,62 @@ var dbConnection = mysql.createConnection(
 dbConnection.connect(function(err)
 {
 	console.log("Connected to cleardb");
+	
+	//Create the table of hosts
+	dbConnection.query
+	("
+		CREATE TABLE Hosts
+		(
+			HostID int,
+			Name varchar(255)
+		)
+	");
+	
+	//Create the table of phantoms
+	dbConnection.query
+	("
+		CREATE TABLE Phantoms
+		(
+			PhantomID int,
+			Name varchar(255)
+		)
+	");
+	
+	//Create the table mapping hosts to bonfires
+	dbConnection.query
+	("
+		CREATE TABLE HostBonfires
+		(
+			HostID int,
+			BonfireID int
+		)
+	");
+	
+	//Create the table mapping phantoms to bonfires
+	dbConnection.query
+	("
+		CREATE TABLE PhantomBonfires
+		(
+			PhantomID int,
+			BonfireID int
+		)
+	");
+	
+	//Create the table of matches
+	dbConnection.query
+	("
+		CREATE TABLE Matches
+		(
+			HostID int,
+			PhantomID int,
+			Password varchar(16),
+			
+			HostClaimed int,
+			PhantomClaimed int
+		)
+	");
+	
+	//TODO: Set up events for SQL
 });
 
 // create a new express server
