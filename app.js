@@ -20,7 +20,7 @@ app.use(express.static(__dirname + '/public'));
 
 
 //Respond to addClient request
-app.get('/addClient' function (req, res)
+app.get('/addClient', function (req, res)
 {
 	console.log('received addClient request');
 	res.send('Hello world!');
