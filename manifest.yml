@@ -3,6 +3,6 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: DarkSouls3Mathmaker
-  host: darksouls3mathmaker
+  name: DarkSouls3Matchmaker
+  host: darksouls3matchmaker
   disk_quota: 1024M
