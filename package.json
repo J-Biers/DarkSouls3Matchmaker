@@ -8,6 +8,7 @@
 	"dependencies": {
 		"express": "4.13.x",
 		"cfenv": "1.0.x"
+		"mysql": "2.x"
 	},
 	"repository": {},
 	"engines": {
