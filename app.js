@@ -55,7 +55,7 @@ var dbConnection = mysql.createConnection(
 });
 dbConnection.connect(function(err)
 {
-	console.log("Connected to cleardb");
+	/*console.log("Connected to cleardb");
 	
 	//Create the table of hosts
 	dbConnection.query("CREATE TABLE Hosts(HostID int, Name varchar(255))");
@@ -71,7 +71,7 @@ dbConnection.connect(function(err)
 	
 	//Create the table of matches
 	dbConnection.query("CREATE TABLE Matches(HostID int, PhantomID int, Password varchar(16), HostClaimed int, PhantomClaimed int)");
-	
+	*/
 	//TODO: Set up events for SQL
 });
 
