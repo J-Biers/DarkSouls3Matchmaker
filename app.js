@@ -57,7 +57,6 @@ dbConnection.connect(function(err)
 {
 	console.log("Connected to cleardb");
 	
-	/*
 	//Create the table of hosts
 	dbConnection.query("CREATE TABLE Hosts(HostID int, Name varchar(255))");
 	
@@ -68,12 +67,11 @@ dbConnection.connect(function(err)
 	dbConnection.query("CREATE TABLE HostBonfires(HostID int, BonfireID int) ");
 	
 	//Create the table mapping phantoms to bonfires
-	dbConnection.query
-	("CREATE TABLE PhantomBonfires(PhantomID int, BonfireID int) ");
+	dbConnection.query("CREATE TABLE PhantomBonfires(PhantomID int, BonfireID int) ");
 	
 	//Create the table of matches
 	dbConnection.query("CREATE TABLE Matches(HostID int, PhantomID int, Password varchar(16), HostClaimed int, PhantomClaimed int)");
-	*/
+	
 	//TODO: Set up events for SQL
 });
 
@@ -88,7 +86,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/addClient', function (req, res)
 {
 	console.log('received addClient request');
-	res.send('Hello world!');
+	res.send('Hello, ' + req.query.name);
 });
 
 //start server on the specified port and binding host
