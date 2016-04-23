@@ -22,23 +22,6 @@ var hostList = [];
 var phantomList = [];
 
 /*---Object Prototypes---*/
-function Bonfire()
-{
-	this.phantomsList = [];
-	this.hostsList = [];
-}
-
-function Host(nameStr, hostResponse)
-{
-	this.nameStr = nameStr;
-	this.hostResponse = hostResponse;
-}
-
-function Phantom(nameStr, phantomResponse)
-{
-	this.nameStr = nameStr;
-	this.phantomResponse = phantomResponse;
-}
 
 
 /*---Functions*---*/
@@ -48,6 +31,7 @@ function addHost(nameStr, hostResponse, bonfireID)
 	//Adds a host
 	//Returns the hostID of the added host
 	
+	//Add the host
 	//TODO: Add host
 }
 
@@ -105,7 +89,10 @@ var dbConnection = mysql.createConnection(
 });
 dbConnection.connect(function(err)
 {
-	/*console.log("Connected to cleardb");
+	console.log("Connected to cleardb");
+	
+	//Use the database
+	dbConnection.query("USE ad_967b35b36ba55e1");
 	
 	//Create the table of hosts
 	dbConnection.query("CREATE TABLE Hosts(HostID int, Name varchar(255))");
@@ -121,7 +108,7 @@ dbConnection.connect(function(err)
 	
 	//Create the table of matches
 	dbConnection.query("CREATE TABLE Matches(HostID int, PhantomID int, Password varchar(16), HostClaimed int, PhantomClaimed int)");
-	*/
+	
 	//TODO: Set up events for SQL
 });
 
