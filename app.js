@@ -43,23 +43,21 @@ function removePhantom(phantomID)
 	//TODO: Remove phantom
 }
 
-function extractBonfireArray(pathStr)
+function extractBonfireArray(queryObj)
 {
 	//Returns an array of bonfire IDs from the query string
 	var bonfireIDs = [];
 	
-	//Split it
-	var paramsArray = pathStr.split('&');
-	
-	//Look at every bonfire id
-	for (i = 2; i < paramsArray.length; i++)
+	//loop through the JSON object
+	for (var key in queryObj)
 	{
-		//Get just the number
-		var splitParam = paramsArray[i].split('=');
-		var numStr = splitParam[0];
-		
-		//Add to the array
-		bonfireIDs.push(parseInt(numStr));
+		//Add the key to the list if it is a number
+		var bonfireInt = parseInt(key);
+		if (!isNaN(bonfireInt))
+		{
+			console.log("Extracted bonfire " + key);
+			bonfireIDs.push(parseInt(key));
+		}
 	}
 	
 	//Return the bonfire array
@@ -108,9 +106,10 @@ app.use(express.static(__dirname + '/public'));
 app.get('/addClient', function (req, res)
 {
 	console.log('received addClient request');
+	console.log('path = ' + req.path);
 	
 	//Create the bonfire array
-	var bonfireIDList = extractBonfireArray(req.path);
+	var bonfireIDList = extractBonfireArray(req.query);
 	
 	//DEBUG: Send back bonfire list
 	var listStr = 'bonfires: ';
@@ -118,7 +117,7 @@ app.get('/addClient', function (req, res)
 	{
 		listStr += bonfireIDList[i] + ', ';
 	}
-	res.send('bonfires: ' + listStr);
+	res.send(listStr);
 	
 	//Is this a host or a phantom?
 	if (req.query.clientType == 'Host')
