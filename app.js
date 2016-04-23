@@ -11,9 +11,39 @@ var cfenv = require('cfenv'); 		// cfenv provides access to your Cloud Foundry e
 
 var mysql = require('mysql');
 
+
+/*---Global vars---*/
+
+var maxHostIDInt = 0;
+var maxPhantomIDInt = 0;
+
+var bonfireList = [];
+var hostList = [];
+var phantomList = [];
+
+/*---Object Prototypes---*/
+function Bonfire()
+{
+	this.phantomsList = [];
+	this.hostsList = [];
+}
+
+function Host(nameStr, hostResponse)
+{
+	this.nameStr = nameStr;
+	this.hostResponse = hostResponse;
+}
+
+function Phantom(nameStr, phantomResponse)
+{
+	this.nameStr = nameStr;
+	this.phantomResponse = phantomResponse;
+}
+
+
 /*---Functions*---*/
 
-function addHost(nameStr, hostRes, bonfireID)
+function addHost(nameStr, hostResponse, bonfireID)
 {
 	//Adds a host
 	//Returns the hostID of the added host
@@ -28,7 +58,7 @@ function removeHost(hostID)
 	//TODO: Remove host
 }
 
-function addPhantom(nameStr, hostRes, bonfireIDList)
+function addPhantom(nameStr, phantomResponse, bonfireIDList)
 {
 	//Adds a host
 	//Returns the phantomID of the added host
@@ -111,22 +141,15 @@ app.get('/addClient', function (req, res)
 	//Create the bonfire array
 	var bonfireIDList = extractBonfireArray(req.query);
 	
-	//DEBUG: Send back bonfire list
-	var listStr = 'bonfires: ';
-	for (i = 0; i < bonfireIDList.length; i++)
-	{
-		listStr += bonfireIDList[i] + ', ';
-	}
-	res.send(listStr);
-	
-	//Is this a host or a phantom?
+	//Add the client
 	if (req.query.clientType == 'Host')
 	{
-		//TODO: Host stuff
+		//Add the host
+		addHost(req.query.name, res, bonfireIDList[0]);
 	}
 	else
 	{
-		//TODO: Phantom stuff
+		addPhantom(req.query.name, res, bonfireIDList);
 	}
 });
 
