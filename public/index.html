@@ -7,10 +7,13 @@
 		</script>
 		<script>
 			$(document).ready(function(){
-			        $("#name").click(function() {
+			        $("#name").on("input", function() {
 					$("#host").slideDown();	
 				});
-				$("#host").click(function() {
+				$("#hp").on("input", function() {
+					$("#area").slideDown();	
+				});
+				$("#hp2").on("input", function() {
 					$("#area").slideDown();	
 				});
 				$("#checkall").change(function () {
