@@ -43,6 +43,28 @@ function removePhantom(phantomID)
 	//TODO: Remove phantom
 }
 
+function extractBonfireArray(pathStr)
+{
+	//Returns an array of bonfire IDs from the query string
+	var bonfireIDs = [];
+	
+	//Split it
+	var paramsArray = pathStr.split('&');
+	
+	//Look at every bonfire id
+	for (i = 2; i < paramsArray.length; i++)
+	{
+		//Get just the number
+		var splitParam = paramsArray[i].split('=');
+		var numStr = splitParam[0];
+		
+		//Add to the array
+		bonfireIDs.push(parseInt(numStr));
+	}
+	
+	//Return the bonfire array
+	return bonfireIDs;
+}
 
 /*---code---*/
 
@@ -86,7 +108,22 @@ app.use(express.static(__dirname + '/public'));
 app.get('/addClient', function (req, res)
 {
 	console.log('received addClient request');
-	res.send('Hello, ' + req.query.name);
+	
+	//Create the bonfire array
+	var bonfireIDList = extractBonfireArray(req.path);
+	
+	//DEBUG: Send back bonfire list
+	res.send('bonfires: ' + bonfireIDList.toString());
+	
+	//Is this a host or a phantom?
+	if (req.query.clientType == 'Host')
+	{
+		//TODO: Host stuff
+	}
+	else
+	{
+		//TODO: Phantom stuff
+	}
 });
 
 //start server on the specified port and binding host

@@ -1,1 +1,2 @@
-<Replace this text with the license you've chosen for your project.>
+This project is protected under a BS license - meaning that the code is open source and can be used / tinkered with however you please.
+Credit would be appreciated when due.
