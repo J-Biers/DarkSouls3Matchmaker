@@ -113,7 +113,12 @@ app.get('/addClient', function (req, res)
 	var bonfireIDList = extractBonfireArray(req.path);
 	
 	//DEBUG: Send back bonfire list
-	res.send('bonfires: ' + bonfireIDList.toString());
+	var listStr = 'bonfires: ';
+	for (i = 0; i < bonfireIDList.length; i++)
+	{
+		listStr += bonfireIDList[i] + ', ';
+	}
+	res.send('bonfires: ' + listStr);
 	
 	//Is this a host or a phantom?
 	if (req.query.clientType == 'Host')
