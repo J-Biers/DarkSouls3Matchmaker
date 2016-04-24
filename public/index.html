@@ -11,9 +11,18 @@
 					$("#host").slideDown();	
 				});
 				$("#hp").on("click", function() {
-					$("#area").slideDown();	
+					$("#platform").slideDown();	
 				});
 				$("#hp2").on("click", function() {
+					$("#platform").slideDown();	
+				});
+				$("#pl1").on("click", function() {
+					$("#area").slideDown();	
+				});
+				$("#pl2").on("click", function() {
+					$("#area").slideDown();	
+				});
+				$("#pl3").on("click", function() {
 					$("#area").slideDown();	
 				});
 				$("#checkall").change(function () {
@@ -36,11 +45,16 @@
          	 	              <input type="text" name="name" id="name" class="transbox"><br>
          	 	        </div>
          	 	        <div id="host" style="display:none">
-         	 		      <h3>Are you a host or a phantom?</h2>
+         	 		      <h3>Are you a host or a phantom?</h3>
  				      <input type="radio" name="clientType" value="Host" id="hp"> Host<br>
   				      <input type="radio" name="clientType" value="Phantom" id="hp2"> Phantom<br>
   				</div>
-  			
+  			        <div id="platform" style="display:none">
+  			              <h3>Which platform are you on?</h3>
+  			              <input type="radio" name="platform" value="0" id="pl1"> PC<br>
+  			              <input type="radio" name="platform" value="1" id="pl2"> Playstation 4<br>
+  			              <input type="radio" name="platform" value="2" id="pl3"> Xbox One<br>
+  			        </div>
   				<div id="area" style="display:none">
   					<h3>Please select the areas you would like to play in</h3>
   					<input type="checkbox" id="checkall"> Check All<br><br>
