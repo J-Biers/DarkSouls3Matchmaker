@@ -78,6 +78,12 @@ function extractBonfireArray(queryObj)
 	return bonfireIDs;
 }
 
+function createTable(tableNameStr, fieldsStr)
+{
+	dbConnection.query("CREATE TABLE IF NOT EXISTS " + tableNameStr + "(" + fieldsStr + ")");
+}
+
+
 /*---code---*/
 
 //Connect to mysql
@@ -95,19 +101,19 @@ dbConnection.connect(function(err)
 	dbConnection.query("USE ad_967b35b36ba55e1");
 	
 	//Create the table of hosts
-	dbConnection.query("CREATE TABLE Hosts(HostID int, Name varchar(255))");
+	createTable("Hosts", "HostID int, Name varchar(255)");
 	
 	//Create the table of phantoms
-	dbConnection.query("CREATE TABLE Phantoms(PhantomID int, Name varchar(255)) ");
+	createTable("Phantoms", "PhantomID int, Name varchar(255)");
 	
 	//Create the table mapping hosts to bonfires
-	dbConnection.query("CREATE TABLE HostBonfires(HostID int, BonfireID int) ");
+	createTable("HostBonfires", "HostID int, BonfireID int");
 	
 	//Create the table mapping phantoms to bonfires
-	dbConnection.query("CREATE TABLE PhantomBonfires(PhantomID int, BonfireID int) ");
+	createTable("PhantomBonfires", "PhantomID int, BonfireID int");
 	
 	//Create the table of matches
-	dbConnection.query("CREATE TABLE Matches(HostID int, PhantomID int, Password varchar(16), HostClaimed int, PhantomClaimed int)");
+	createTable("Matches", "HostID int, PhantomID int, Password varchar(16), HostClaimed int, PhantomClaimed int");
 	
 	//TODO: Set up events for SQL
 });
