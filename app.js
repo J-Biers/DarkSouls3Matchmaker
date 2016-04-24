@@ -26,7 +26,7 @@ var phantomResponseList = [];
 
 /*---Functions*---*/
 
-function addHost(nameStr, platformID, hostResponse, bonfireID)
+function addHost(nameStr, platformID, hostResponse, bonfireID, addedTime)
 {
 	//Adds a host
 	//Returns the hostID of the added host
@@ -37,10 +37,12 @@ function addHost(nameStr, platformID, hostResponse, bonfireID)
 	
 	//Insert into the host table
 	dbConnection.query("INSERT INTO Hosts (HostID, Name) VALUES (" + hostID + ", '" + nameStr + "')");
+	console.log("Inserted " + hostID + " into hosts table");
 	hostResponseList.push(hostResponse);
 	
 	//Insert into the bonfire table
-	dbConnection.query("INSERT INTO HostBonfires (HostID, BonfireID, Platform) VALUES (" + hostID + ", " + bonfireID + ", " + platformID + ")");
+	dbConnection.query("INSERT INTO HostBonfires (HostID, BonfireID, Platform, AddedTime) VALUES (" + hostID + ", " + bonfireID + ", " + platformID + ", " + addedTime + ")");
+	console.log ("Inserted " + hostID + " into hostbonfires");
 	
 	return hostID;
 }
@@ -52,7 +54,7 @@ function removeHost(hostID)
 	dbConnection.query("DELETE FROM HostBonfires WHERE HostID=" + hostID);
 }
 
-function addPhantom(nameStr, platformID, phantomResponse, bonfireIDList)
+function addPhantom(nameStr, platformID, phantomResponse, bonfireIDList, addedTime)
 {
 	//Adds a host
 	//Returns the phantomID of the added host
@@ -68,7 +70,7 @@ function addPhantom(nameStr, platformID, phantomResponse, bonfireIDList)
 	//Insert all bonfires into the bonfire table
 	for (i = 0; i < bonfireIDList.length; i++)
 	{
-		dbConnection.query("INSERT INTO PhantomBonfires (PhantomID, BonfireID, Platform) VALUES (" + phantomID + ", " + bonfireIDList[i] + ", " + platformID + ")");
+		dbConnection.query("INSERT INTO PhantomBonfires (PhantomID, BonfireID, Platform) VALUES (" + phantomID + ", " + bonfireIDList[i] + ", " + platformID + ", " + addedTime + ")");
 	}
 	
 	//Return phantomID
@@ -81,7 +83,10 @@ function removePhantom(phantomID)
 	
 	//Remove phantom
 	dbConnection.query("DELETE FROM Phantoms WHERE PhantomID=" + phantomID);
+	console.log("Deleted " + phantomID + " from phantoms table");
+	
 	dbConnection.query("DELETE FROM PhantomBonfires WHERE PhantomID=" + phantomID);
+	console.log("Deleted " + phantomID + " from phantom bonfires table");
 }
 
 function extractBonfireArray(queryObj)
@@ -126,18 +131,23 @@ dbConnection.connect(function(err)
 	
 	//Use the database
 	dbConnection.query("USE ad_967b35b36ba55e1");
+	console.log("Using the correct database");
 	
 	//Create the table of hosts
 	createTable("Hosts", "HostID int, Name varchar(255)");
+	console.log("Created Hosts table");
 	
 	//Create the table of phantoms
 	createTable("Phantoms", "PhantomID int, Name varchar(255)");
+	console.log("Created phantoms table");
 	
 	//Create the table mapping hosts to bonfires
-	createTable("HostBonfires", "HostID int, BonfireID int, Platform int");
+	createTable("HostBonfires", "HostID int, BonfireID int, Platform int, AddedTime int");
+	console.log("Created hostbonfires table");
 	
 	//Create the table mapping phantoms to bonfires
-	createTable("PhantomBonfires", "PhantomID int, BonfireID int, Platform int");
+	createTable("PhantomBonfires", "PhantomID int, BonfireID int, Platform int, AddedTime int");
+	console.log("Created phatombonfires table");
 	
 	//TODO: Set up events for SQL
 });
@@ -161,11 +171,11 @@ app.get('/addClient', function (req, res)
 	if (req.query.clientType === 'Host')
 	{
 		//Add the host
-		addHost(req.query.name, req.query.platform, res, bonfireIDList[0]);
+		addHost(req.query.name, req.query.platform, res, bonfireIDList[0], Date.now());
 	}
 	else
 	{
-		addPhantom(req.query.name, req.query.platform, res, bonfireIDList);
+		addPhantom(req.query.name, req.query.platform, res, bonfireIDList, Date.now());
 	}
 });
 
