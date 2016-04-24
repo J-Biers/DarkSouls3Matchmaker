@@ -26,7 +26,7 @@ var phantomResponseList = [];
 
 /*---Functions*---*/
 
-function addHost(nameStr, hostResponse, bonfireID)
+function addHost(nameStr, platformID, hostResponse, bonfireID)
 {
 	//Adds a host
 	//Returns the hostID of the added host
@@ -40,7 +40,7 @@ function addHost(nameStr, hostResponse, bonfireID)
 	hostResponseList.push(hostResponse);
 	
 	//Insert into the bonfire table
-	dbConnection.query("INSERT INTO HostBonfires (HostID, BonfireID) VALUES (" + hostID + ", " + bonfireID + ")");
+	dbConnection.query("INSERT INTO HostBonfires (HostID, BonfireID, Platform) VALUES (" + hostID + ", " + bonfireID + ", " + platformID + ")");
 	
 	return hostID;
 }
@@ -52,7 +52,7 @@ function removeHost(hostID)
 	dbConnection.query("DELETE FROM HostBonfires WHERE HostID=" + hostID);
 }
 
-function addPhantom(nameStr, phantomResponse, bonfireIDList)
+function addPhantom(nameStr, platformID, phantomResponse, bonfireIDList)
 {
 	//Adds a host
 	//Returns the phantomID of the added host
@@ -68,7 +68,7 @@ function addPhantom(nameStr, phantomResponse, bonfireIDList)
 	//Insert all bonfires into the bonfire table
 	for (i = 0; i < bonfireIDList.length; i++)
 	{
-		dbConnection.query("INSERT INTO PhantomBonfires (PhantomID, BonfireID) VALUES (" + phantomID + ", " + bonfireIDList[i] + ")");
+		dbConnection.query("INSERT INTO PhantomBonfires (PhantomID, BonfireID, Platform) VALUES (" + phantomID + ", " + bonfireIDList[i] + ", " + platformID + ")");
 	}
 	
 	//Return phantomID
@@ -108,7 +108,6 @@ function extractBonfireArray(queryObj)
 function createTable(tableNameStr, fieldsStr)
 {
 	dbConnection.query("CREATE TABLE IF NOT EXISTS " + tableNameStr + "(" + fieldsStr + ")");
-	dbConnection.query("")
 }
 
 
@@ -135,10 +134,10 @@ dbConnection.connect(function(err)
 	createTable("Phantoms", "PhantomID int, Name varchar(255)");
 	
 	//Create the table mapping hosts to bonfires
-	createTable("HostBonfires", "HostID int, BonfireID int");
+	createTable("HostBonfires", "HostID int, BonfireID int, Platform int");
 	
 	//Create the table mapping phantoms to bonfires
-	createTable("PhantomBonfires", "PhantomID int, BonfireID int");
+	createTable("PhantomBonfires", "PhantomID int, BonfireID int, Platform int");
 	
 	//TODO: Set up events for SQL
 });
@@ -154,7 +153,6 @@ app.use(express.static(__dirname + '/public'));
 app.get('/addClient', function (req, res)
 {
 	console.log('received addClient request');
-	console.log('path = ' + req.path);
 	
 	//Create the bonfire array
 	var bonfireIDList = extractBonfireArray(req.query);
@@ -163,11 +161,11 @@ app.get('/addClient', function (req, res)
 	if (req.query.clientType === 'Host')
 	{
 		//Add the host
-		addHost(req.query.name, res, bonfireIDList[0]);
+		addHost(req.query.name, req.query.platform, res, bonfireIDList[0]);
 	}
 	else
 	{
-		addPhantom(req.query.name, res, bonfireIDList);
+		addPhantom(req.query.name, req.query.platform, res, bonfireIDList);
 	}
 });
 
