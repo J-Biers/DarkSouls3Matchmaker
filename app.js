@@ -41,13 +41,15 @@ function addHost(nameStr, hostResponse, bonfireID)
 	
 	//Insert into the bonfire table
 	dbConnection.query("INSERT INTO HostBonfires (HostID, BonfireID) VALUES (" + hostID + ", " + bonfireID + ")");
+	
+	return hostID;
 }
 
 function removeHost(hostID)
 {
 	//Removes a host
-	
-	//TODO: Remove host
+	dbConnection.query("DELETE FROM Hosts WHERE HostID=" + hostID);
+	dbConnection.query("DELETE FROM HostBonfires WHERE HostID=" + hostID);
 }
 
 function addPhantom(nameStr, phantomResponse, bonfireIDList)
@@ -55,14 +57,31 @@ function addPhantom(nameStr, phantomResponse, bonfireIDList)
 	//Adds a host
 	//Returns the phantomID of the added host
 
-	//TODO: Add phantom
+	//Get an id
+	var phantomID = maxPhantomID;
+	maxPhantomID++;
+
+	//Add to phantoms table
+	dbConnection.query("INSERT INTO Phantoms(PhantomID, Name) VALUES (" + phantomID + ", '" + nameStr + "')");
+	phantomResponseList.push(phantomResponse);
+	
+	//Insert all bonfires into the bonfire table
+	for (i = 0; i < bonfireIDList.length; i++)
+	{
+		dbConnection.query("INSERT INTO PhantomBonfires (PhantomID, BonfireID) VALUES (" + phantomID + ", " + bonfireIDList[i] + ")");
+	}
+	
+	//Return phantomID
+	return phantomID;
 }
 
 function removePhantom(phantomID)
 {
 	//Removes a phantom
 	
-	//TODO: Remove phantom
+	//Remove phantom
+	dbConnection.query("DELETE FROM Phantoms WHERE PhantomID=" + phantomID);
+	dbConnection.query("DELETE FROM PhantomBonfires WHERE PhantomID=" + phantomID);
 }
 
 function extractBonfireArray(queryObj)
@@ -89,6 +108,7 @@ function extractBonfireArray(queryObj)
 function createTable(tableNameStr, fieldsStr)
 {
 	dbConnection.query("CREATE TABLE IF NOT EXISTS " + tableNameStr + "(" + fieldsStr + ")");
+	dbConnection.query("")
 }
 
 
@@ -120,10 +140,6 @@ dbConnection.connect(function(err)
 	//Create the table mapping phantoms to bonfires
 	createTable("PhantomBonfires", "PhantomID int, BonfireID int");
 	
-	//Create the table of matches
-	createTable("Matches", "HostID int, PhantomID int, Password varchar(16), HostClaimed int, PhantomClaimed int");
-	
-	
 	//TODO: Set up events for SQL
 });
 
@@ -144,7 +160,7 @@ app.get('/addClient', function (req, res)
 	var bonfireIDList = extractBonfireArray(req.query);
 	
 	//Add the client
-	if (req.query.clientType == 'Host')
+	if (req.query.clientType === 'Host')
 	{
 		//Add the host
 		addHost(req.query.name, res, bonfireIDList[0]);
