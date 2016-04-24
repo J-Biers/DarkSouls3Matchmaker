@@ -21,10 +21,28 @@ var maxPhantomID = 0;
 var hostResponseList = [];
 var phantomResponseList = [];
 
+var charList = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
 /*---Object Prototypes---*/
 
+function Match(bonfireID, hostID, phantomID)
+{
+	this.bonfireID = bonfireID;
+	this.hostID = hostID;
+	this.phantomID = phantomID;
+	
+	//Generate a password
+	this.password = randomPassword();
+}
 
-/*---Functions*---*/
+
+/*---SQL Functions---*/
+
+function createTable(tableNameStr, fieldsStr)
+{
+	dbConnection.query("CREATE TABLE IF NOT EXISTS " + tableNameStr + "(" + fieldsStr + ")");
+}
 
 function addHost(nameStr, platformID, hostResponse, bonfireID, addedTime)
 {
@@ -70,7 +88,7 @@ function addPhantom(nameStr, platformID, phantomResponse, bonfireIDList, addedTi
 	//Insert all bonfires into the bonfire table
 	for (i = 0; i < bonfireIDList.length; i++)
 	{
-		dbConnection.query("INSERT INTO PhantomBonfires (PhantomID, BonfireID, Platform) VALUES (" + phantomID + ", " + bonfireIDList[i] + ", " + platformID + ", " + addedTime + ")");
+		dbConnection.query("INSERT INTO PhantomBonfires (PhantomID, BonfireID, Platform, AddedTime) VALUES (" + phantomID + ", " + bonfireIDList[i] + ", " + platformID + ", " + addedTime + ")");
 	}
 	
 	//Return phantomID
@@ -87,6 +105,54 @@ function removePhantom(phantomID)
 	
 	dbConnection.query("DELETE FROM PhantomBonfires WHERE PhantomID=" + phantomID);
 	console.log("Deleted " + phantomID + " from phantom bonfires table");
+}
+
+function findMatchHost(hostID, platformID, bonfireID)
+{
+	//Attempts to match the host with a phantom, then sends the match
+	//If no matches were found, wait for one to happen.
+	
+	//Get all phantoms at the bonfire
+	dbConnection.query("SELECT PhantomID FROM PhantomBonfires WHERE BonfireID = " + bonfireID + " AND Platform = " + platformID + " ORDER BY AddedTime DESC", function (error, results, fields)
+	{
+		//If there are no matches, return.  We'll wait for a match to happen.
+		if (Object.keys(results).length == 0)
+		{
+			return;
+		}
+		
+		//Match with the first phantom found
+		var phantomID = results[0].PhantomID;
+		sendMatch(bonfireID, hostID, phantomID);
+	});
+}
+
+function findMatchPhantom(phantomID, platformID, bonfireIDList)
+{
+	//Attempts to match the phantom with a host, then sends the match
+	//If no matches were found, wait for one to happen.
+	//TODO
+	
+	return null;
+}
+
+
+/*---Misc functions---*/
+
+function sendMatch(bonfireID, hostID, phantomID)
+{
+	//Sends a match object to both phantom and host, then removes them from the DB
+	
+	//Create the match object
+	var matchObj = new Match(bonfireID, hostID, phantomID);
+	
+	//Send the match object to both of them
+	hostResponseList[matchObj.hostID].json(matchObj);
+	phantomResponseList[matchObj.phantomID].json(matchObj);
+	
+	//Remove them both from the DB
+	removePhantom(phantomID);
+	removeHost(hostID);
 }
 
 function extractBonfireArray(queryObj)
@@ -110,9 +176,21 @@ function extractBonfireArray(queryObj)
 	return bonfireIDs;
 }
 
-function createTable(tableNameStr, fieldsStr)
+function randomPassword()
 {
-	dbConnection.query("CREATE TABLE IF NOT EXISTS " + tableNameStr + "(" + fieldsStr + ")");
+	//Returns a randomly generated password
+	
+	var length = 5;
+	var password = "";
+	
+	for (i = 0; i < length; i++)
+	{
+		//Choose a random letter
+		var index = Math.floor(Math.random() * charList.length);
+		password += charList.charAt(index);
+	}
+	
+	return password;
 }
 
 
@@ -164,18 +242,28 @@ app.get('/addClient', function (req, res)
 {
 	console.log('received addClient request');
 	
-	//Create the bonfire array
+	//Extract info from request
+	var name = req.query.name;
+	var platformID = req.query.platform;
 	var bonfireIDList = extractBonfireArray(req.query);
+	
 	
 	//Add the client
 	if (req.query.clientType === 'Host')
 	{
 		//Add the host
-		addHost(req.query.name, req.query.platform, res, bonfireIDList[0], Date.now());
+		var hostID = addHost(name, platformID, res, bonfireIDList[0], Date.now());
+		
+		//Find a match
+		findMatchHost(hostID, platformID, bonfireIDList[0]);
 	}
 	else
 	{
-		addPhantom(req.query.name, req.query.platform, res, bonfireIDList, Date.now());
+		//Add the phantom
+		var phantomID = addPhantom(name, platformID, res, bonfireIDList, Date.now());
+		
+		//Find a match
+		findMatchPhantom(phantomID, platformID, bonfireIDList);
 	}
 });
 
