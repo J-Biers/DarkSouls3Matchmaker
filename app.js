@@ -14,12 +14,12 @@ var mysql = require('mysql');
 
 /*---Global vars---*/
 
-var maxHostIDInt = 0;
-var maxPhantomIDInt = 0;
+var maxHostID = 0;
+var maxPhantomID = 0;
 
-var bonfireList = [];
-var hostList = [];
-var phantomList = [];
+
+var hostResponseList = [];
+var phantomResponseList = [];
 
 /*---Object Prototypes---*/
 
@@ -31,8 +31,16 @@ function addHost(nameStr, hostResponse, bonfireID)
 	//Adds a host
 	//Returns the hostID of the added host
 	
-	//Add the host
-	//TODO: Add host
+	//Get an id
+	var hostID = maxHostID;
+	maxHostID++;
+	
+	//Insert into the host table
+	dbConnection.query("INSERT INTO Hosts (HostID, Name) VALUES (" + hostID + ", '" + nameStr + "')");
+	hostResponseList.push(hostResponse);
+	
+	//Insert into the bonfire table
+	dbConnection.query("INSERT INTO HostBonfires (HostID, BonfireID) VALUES (" + hostID + ", " + bonfireID + ")");
 }
 
 function removeHost(hostID)
@@ -114,6 +122,7 @@ dbConnection.connect(function(err)
 	
 	//Create the table of matches
 	createTable("Matches", "HostID int, PhantomID int, Password varchar(16), HostClaimed int, PhantomClaimed int");
+	
 	
 	//TODO: Set up events for SQL
 });
