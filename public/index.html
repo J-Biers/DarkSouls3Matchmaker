@@ -6,6 +6,65 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
 		</script>
 		<script>
+			var bonfires = ["N/A", 
+			"Firelink Shrine",
+			"Cemetary of Ash",
+			"Iudex Gundyr",
+			"Untended Graves",
+			"Champion Gundyr",
+			"High Wall of Lothric",
+			"Tower on the Wall",
+			"Vordt of the Boreal Valley",
+			"Dancer of the Boreal Valley",
+			"Oceiros, the Consumed King",
+			"Foot of the High Wall",
+			"Undead Settlement",
+			"Cliff Underside",
+			"Dilapidated Bridge",
+			"Pit of Hollows",
+			"Road of Sacrifices",
+			"Halfway Fortress",
+			"Crucifixion Woods",
+			"Crystal Sage",
+			"Farron Keep",
+			"Keep Ruins",
+			"Farron Keep Perimeter",
+			"Old Wolf of Farron",
+			"Abyss Watchers",
+			"Cathedral of the Deep",
+			"Cleansing Chapel",
+			"Rosaria's bed Chamber",
+			"Deacons of the Deep",
+			"Catacombs of Carthus",
+			"High Lord Wolnir",
+			"Abandoned Tomb",
+			"Old King's Antechamber",
+			"Demon Ruins",
+			"Old Demon King",
+			"Irithyll of the Boreal Valley",
+			"Central Irithyll",
+			"Church of Yorshka",
+			"Distant Manor",
+			"Pontiff Sulyvahn",
+			"Water Reserve",
+			"Anor Londo",
+			"Prison Tower",
+			"Aldrich, Devourer of Gods",
+			"Irithyll Dungeon",
+			"Profaned Capital",
+			"Yhorm the Giant",
+			"Lothric Castle",
+			"Dragon Barracks"
+			"Dragonslayer Armor",
+			"Grand Archives",
+			"Twin Princes",
+			"Archdragon Peak",
+			"Dragon-Kin Mausoleum",
+			"Great Belfry",
+			"Nameless King",
+			"Flameless Shrine",
+			"Kiln of the First Flame"
+			];
 			$(document).ready(function(){
 			        $("#name").on("input", function() {
 					$("#host").slideDown();	
@@ -39,26 +98,29 @@
 			<h1>Dark Souls III Matchmaking Service</h1>		
 			
 			<form method="GET" action="addClient">
-         	 	<!--<form method="post" action="mailto:biermanj@purdue.edu.">-->
+         	 	<!--Name field-->
          	 	        <div id="name">
          	 	              <h3>Enter your Name</h3>
          	 	              <input type="text" name="name" id="name" class="transbox"><br>
          	 	        </div>
+         	 	        <!--The host field-->
          	 	        <div id="host" style="display:none">
          	 		      <h3>Are you a host or a phantom?</h3>
  				      <input type="radio" name="clientType" value="Host" id="hp"> Host<br>
   				      <input type="radio" name="clientType" value="Phantom" id="hp2"> Phantom<br>
   				</div>
+  				<!--The platform field-->
   			        <div id="platform" style="display:none">
   			              <h3>Which platform are you on?</h3>
   			              <input type="radio" name="platform" value="0" id="pl1"> PC<br>
   			              <input type="radio" name="platform" value="1" id="pl2"> Playstation 4<br>
   			              <input type="radio" name="platform" value="2" id="pl3"> Xbox One<br>
   			        </div>
+  			        <!--The area field-->
   				<div id="area" style="display:none">
   					<h3>Please select the areas you would like to play in</h3>
   					<input type="checkbox" id="checkall"> Check All<br><br>
-  					
+  					<!--Cemetary of ash-->
   					<div class="cemetary-of-ash">
   						<br>
   						<br>
@@ -74,7 +136,7 @@
   						</div>
   						<br><br><br>
   					</div>
-  					
+  					<!--High Wall of Lothric-->
   					<div class="high-wall-of-lothric">
   						<br><br>
   						<div class="dark">
@@ -87,7 +149,7 @@
   						</div>
   						<br><br><br>
   					</div>
-  					
+  					<!--Undead settlement-->
   					<div class="undead-settlement">
   						<br><br>
   						<div class="dark">
@@ -100,7 +162,7 @@
   						</div>
   						<br><br><br>
   					</div>
-  					
+  					<!--Road of Sacrifices-->
   					<div class="road-of-sacrifices">
   						<br><br>
   						<div class="dark">
@@ -118,7 +180,7 @@
   						<br><br><br>
   					</div>
   					
-  					
+  					<!--Cathedral of the Deep-->
   					<div class="cathedral-of-the-deep">
   						<br><br>
   						<div class="dark">
@@ -131,7 +193,7 @@
   						<br><br><br>
   					</div>
   					
-  					
+  					<!--Catacombs of Carthus-->
   					<div class="catacombs-of-carthus">
   						<br><br>
   						<div class=dark>
@@ -146,7 +208,7 @@
   						<br><br><br>
   					</div>
   					
-  					
+  					<!--Irithyll of the Boreal Valley-->
   					<div class="valley">
   						<br><br>
   						<div class="dark">
@@ -154,62 +216,61 @@
   							<input type="checkbox" name="35" value="TRUE"> Irithyll of the Boreal Valley<br>
   							<input type="checkbox" name="36" value="TRUE"> Central Irithyll<br>
   							<input type="checkbox" name="37" value="TRUE"> Church of Yorshka<br>
-  							<input type="checkbox" name="38" value="TRUE"> Old Demon King<br>
-  							<input type="checkbox" name="39" value="TRUE"> Distant Manor<br>
-  							<input type="checkbox" name="40" value="TRUE"> Pontiff Sulyvahn<br>
-  							<input type="checkbox" name="41" value="TRUE"> Water Reserve<br>
-  							<input type="checkbox" name="42" value="TRUE"> Anor Londo<br>
-  							<input type="checkbox" name="43" value="TRUE"> Prison Tower<br>
-  							<input type="checkbox" name="44" value="TRUE"> Aldrich, Devourer of Gods<br>
+  							<input type="checkbox" name="38" value="TRUE"> Distant Manor<br>
+  							<input type="checkbox" name="39" value="TRUE"> Pontiff Sulyvahn<br>
+  							<input type="checkbox" name="40" value="TRUE"> Water Reserve<br>
+  							<input type="checkbox" name="41" value="TRUE"> Anor Londo<br>
+  							<input type="checkbox" name="42" value="TRUE"> Prison Tower<br>
+  							<input type="checkbox" name="43" value="TRUE"> Aldrich, Devourer of Gods<br>
   						</div>
   						<br><br><br>
   					</div>
   					
   					
-  					
+  					<!--Irithyll Dungeon-->
   					<div class="dungeon">
   						<br><br>
   						<div class="dark">
   							<h4>Irithyll Dungeon</h4>
-  							<input type="checkbox" name="45" value="TRUE"> Irithyll Dungeon<br>
-  							<input type="checkbox" name="46" value="TRUE"> Profaned Capital<br>
-  							<input type="checkbox" name="47" value="TRUE"> Yhorm the Giant<br>
+  							<input type="checkbox" name="44" value="TRUE"> Irithyll Dungeon<br>
+  							<input type="checkbox" name="45" value="TRUE"> Profaned Capital<br>
+  							<input type="checkbox" name="46" value="TRUE"> Yhorm the Giant<br>
   						</div>
   						<br><br><br>
   					</div>
-  				
+  					<!--Lothric Castle-->
   					<div class="castle">
   						<br><br>
   						<div class="dark">
   							<h4>Lothric Castle</h4>
-  							<input type="checkbox" name="48" value="TRUE"> Lothric Castle<br>
-  							<input type="checkbox" name="49" value="TRUE"> Dragon Barracks<br>
-  							<input type="checkbox" name="50" value="TRUE"> Dragonslayer Armor<br>
-  							<input type="checkbox" name="51" value="TRUE"> Grand Archives<br>
-  							<input type="checkbox" name="52" value="TRUE"> Twin Princes<br>
+  							<input type="checkbox" name="47" value="TRUE"> Lothric Castle<br>
+  							<input type="checkbox" name="48" value="TRUE"> Dragon Barracks<br>
+  							<input type="checkbox" name="49" value="TRUE"> Dragonslayer Armor<br>
+  							<input type="checkbox" name="50" value="TRUE"> Grand Archives<br>
+  							<input type="checkbox" name="51" value="TRUE"> Twin Princes<br>
   						</div>
   						<br><br><br>
   					</div>
   					
-  					
+  					<!--Archdragon Peak-->
   					<div class="peak">
   						<br><br>
   						<div class="dark">
   							<h4>Archdragon Peak</h4>
-  							<input type="checkbox" name="53" value="TRUE"> Archdragon Peak<br>
-  							<input type="checkbox" name="54" value="TRUE"> Dragon-Kin Mausoleum<br>
-  							<input type="checkbox" name="55" value="TRUE"> Great Belfry<br>
-  							<input type="checkbox" name="56" value="TRUE"> Nameless King<br>
+  							<input type="checkbox" name="52" value="TRUE"> Archdragon Peak<br>
+  							<input type="checkbox" name="53" value="TRUE"> Dragon-Kin Mausoleum<br>
+  							<input type="checkbox" name="54" value="TRUE"> Great Belfry<br>
+  							<input type="checkbox" name="55" value="TRUE"> Nameless King<br>
   						</div>
   						<br><br><br>
   					</div>
-  				
+  					<!--Kiln of the First Flame-->
   					<div class="kiln">
   						<br><br>
   						<div class="dark">
   							<h4>Kiln of the First Flame</h4>
-  							<input type="checkbox" name="57" value="TRUE"> Flameless Shrine<br>
-  							<input type="checkbox" name="58" value="TRUE"> Kiln of the First Flame<br>
+  							<input type="checkbox" name="56" value="TRUE"> Flameless Shrine<br>
+  							<input type="checkbox" name="57" value="TRUE"> Kiln of the First Flame<br>
   						</div>
   						<br><br><br>
   					</div>
