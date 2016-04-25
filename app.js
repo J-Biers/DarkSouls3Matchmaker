@@ -115,6 +115,8 @@ function findMatchHost(hostID, hostName, platformID, bonfireID)
 	//Get all phantoms at the bonfire
 	dbConnection.query("SELECT PhantomID FROM PhantomBonfires WHERE BonfireID = " + bonfireID + " AND Platform = " + platformID + " ORDER BY AddedTime DESC", function (error, results, fields)
 	{
+		console.log("Received response from phantom bonfire query");
+		
 		//If there are no matches, return.  We'll wait for a match to happen.
 		if (Object.keys(results).length == 0)
 		{
@@ -123,18 +125,32 @@ function findMatchHost(hostID, hostName, platformID, bonfireID)
 		
 		//Match with the first phantom found
 		var phantomID = results[0].PhantomID;
-		//TODO: Get the names
-		//sendMatch(bonfireID, hostID, phantomID);
+		console.log("Got phantom ID: " + phantomID);
+		
+		//Get the phantom's name
+		dbConnection.query("SELECT Name FROM Phantoms WHERE PhantomID=" + phantomID, function (error, results, fields)
+		{
+			console.log("Received response from phantom name query");
+			
+			var phantomName = results[0].Name;
+			console.log("Extracted phantom name " + phantomName);
+			
+			//Send the match
+			sendMatch(bonfireID, hostID, phantomID, hostName, phantomName);
+		});
+		console.log("Sent query for phantomName with ID " + phantomID);
+		
 	});
+	console.log("Sent query to look for phantoms at bonfire " + bonfireID);
 }
 
-function findMatchPhantom(phantomID, phantomName platformID, bonfireIDList)
+function findMatchPhantom(phantomID, phantomName, platformID, bonfireIDList)
 {
 	//Attempts to match the phantom with a host, then sends the match
 	//If no matches were found, wait for one to happen.
 	//TODO
 	
-	return null;
+	return;
 }
 
 
@@ -247,7 +263,7 @@ app.get('/addClient', function (req, res)
 	var name = req.query.name;
 	var platformID = req.query.platform;
 	var bonfireIDList = extractBonfireArray(req.query);
-	
+	console.log("First bonfire in array is " + bonfireIDList[0]);
 	
 	//Add the client
 	if (req.query.clientType === 'Host')
@@ -256,7 +272,7 @@ app.get('/addClient', function (req, res)
 		var hostID = addHost(name, platformID, res, bonfireIDList[0], Date.now());
 		
 		//Find a match
-		findMatchHost(hostID, platformID, bonfireIDList[0]);
+		findMatchHost(hostID, name, platformID, bonfireIDList[0]);
 	}
 	else
 	{
