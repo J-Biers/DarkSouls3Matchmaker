@@ -6,6 +6,34 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
 		</script>
 		<script>
+			$(document).ready(function(){
+			        $("#name").on("input", function() {
+					$("#host").slideDown();	
+				});
+				$("#hp").on("click", function() {
+					$("#platform").slideDown();	
+				});
+				$("#hp2").on("click", function() {
+					$("#platform").slideDown();	
+				});
+				$("#pl1").on("click", function() {
+					$("#area").slideDown();	
+				});
+				$("#pl2").on("click", function() {
+					$("#area").slideDown();	
+				});
+				$("#pl3").on("click", function() {
+					$("#area").slideDown();	
+				});
+				$("#checkall").change(function () {
+    					$("input:checkbox").prop('checked', $(this).prop("checked"));
+				});
+				$("#area").click(function() {
+			            $("#submit").fadeIn(); 
+				});
+			});
+		</script>
+		<script>
 			var bonfires = ["N/A", 
 			"Firelink Shrine",
 			"Cemetary of Ash",
@@ -63,34 +91,7 @@
 			"Great Belfry",
 			"Nameless King",
 			"Flameless Shrine",
-			"Kiln of the First Flame"
-			];
-			$(document).ready(function(){
-			        $("#name").on("input", function() {
-					$("#host").slideDown();	
-				});
-				$("#hp").on("click", function() {
-					$("#platform").slideDown();	
-				});
-				$("#hp2").on("click", function() {
-					$("#platform").slideDown();	
-				});
-				$("#pl1").on("click", function() {
-					$("#area").slideDown();	
-				});
-				$("#pl2").on("click", function() {
-					$("#area").slideDown();	
-				});
-				$("#pl3").on("click", function() {
-					$("#area").slideDown();	
-				});
-				$("#checkall").change(function () {
-    					$("input:checkbox").prop('checked', $(this).prop("checked"));
-				});
-				$("#area").click(function() {
-			            $("#submit").fadeIn(); 
-				});
-			});
+			"Kiln of the First Flame"];
 		</script>
 	</head>
 	<body>
@@ -99,7 +100,7 @@
 			
 			<form method="GET" action="addClient">
          	 	<!--Name field-->
-         	 	        <div id="name">
+         	 	        <div>
          	 	              <h3>Enter your Name</h3>
          	 	              <input type="text" name="name" id="name" class="transbox"><br>
          	 	        </div>
