@@ -31,8 +31,16 @@
 				$("#area").click(function() {
 			            $("#submit").fadeIn(); 
 				});
-				$("#enterInfo").submit(function() {
-					$("#info").slideUp();
+				$("#submit").click(function() {
+					$.ajax({
+						type: "GET",
+						url: "addClient",
+						data: $("#info").serialize(),
+						success: function(response) {
+							alert("submitted comment");
+							$("document.body").append(response);
+						}	
+					});
 				});
 				var bonfires = $.makeArray($("bonfire"));
 				
@@ -43,7 +51,7 @@
 		<div class="dark-container">
 			<h1>Dark Souls III Matchmaking Service</h1>		
 			<!--method="GET" action="addClient"-->
-			<form  method="GET" action="addClient" id="enterInfo">
+			<form  method="GET" action="" id="info">
          	 	<!--Name field-->
          	 	        <div>
          	 	              <h3>Enter your Name</h3>
