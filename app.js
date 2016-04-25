@@ -26,11 +26,11 @@ var charList = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 /*---Object Prototypes---*/
 
-function Match(bonfireID, hostID, phantomID)
+function Match(bonfireID, hostName, phantomName)
 {
 	this.bonfireID = bonfireID;
-	this.hostID = hostID;
-	this.phantomID = phantomID;
+	this.hostName = hostName;
+	this.phantomName = phantomName;
 	
 	//Generate a password
 	this.password = randomPassword();
@@ -107,7 +107,7 @@ function removePhantom(phantomID)
 	console.log("Deleted " + phantomID + " from phantom bonfires table");
 }
 
-function findMatchHost(hostID, platformID, bonfireID)
+function findMatchHost(hostID, hostName, platformID, bonfireID)
 {
 	//Attempts to match the host with a phantom, then sends the match
 	//If no matches were found, wait for one to happen.
@@ -123,11 +123,12 @@ function findMatchHost(hostID, platformID, bonfireID)
 		
 		//Match with the first phantom found
 		var phantomID = results[0].PhantomID;
-		sendMatch(bonfireID, hostID, phantomID);
+		//TODO: Get the names
+		//sendMatch(bonfireID, hostID, phantomID);
 	});
 }
 
-function findMatchPhantom(phantomID, platformID, bonfireIDList)
+function findMatchPhantom(phantomID, phantomName platformID, bonfireIDList)
 {
 	//Attempts to match the phantom with a host, then sends the match
 	//If no matches were found, wait for one to happen.
@@ -139,16 +140,16 @@ function findMatchPhantom(phantomID, platformID, bonfireIDList)
 
 /*---Misc functions---*/
 
-function sendMatch(bonfireID, hostID, phantomID)
+function sendMatch(bonfireID, hostID, phantomID, hostName, phantomName)
 {
 	//Sends a match object to both phantom and host, then removes them from the DB
 	
 	//Create the match object
-	var matchObj = new Match(bonfireID, hostID, phantomID);
+	var matchObj = new Match(bonfireID, hostName, phantomName);
 	
 	//Send the match object to both of them
-	hostResponseList[matchObj.hostID].json(matchObj);
-	phantomResponseList[matchObj.phantomID].json(matchObj);
+	hostResponseList[hostID].json(matchObj);
+	phantomResponseList[phantomID].json(matchObj);
 	
 	//Remove them both from the DB
 	removePhantom(phantomID);
@@ -263,7 +264,7 @@ app.get('/addClient', function (req, res)
 		var phantomID = addPhantom(name, platformID, res, bonfireIDList, Date.now());
 		
 		//Find a match
-		findMatchPhantom(phantomID, platformID, bonfireIDList);
+		findMatchPhantom(phantomID, name, platformID, bonfireIDList);
 	}
 });
 
