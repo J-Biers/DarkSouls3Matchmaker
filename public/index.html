@@ -31,18 +31,18 @@
 				$("#area").click(function() {
 			            $("#submit").fadeIn(); 
 				});
+				var bonfires = $.makeArray($("bonfire"));
 				$("#submit").click(function() {
 					$.ajax({
 						type: "GET",
 						url: "addClient",
 						data: $("#info").serialize(),
 						success: function(response) {
-							alert("submitted comment");
-							$("document.body").append(response);
-						}	
+							alert("Host Name: " + response.hostName + "\nPhantom Name: " + response.phantomName);
+						}
 					});
 				});
-				var bonfires = $.makeArray($("bonfire"));
+				
 				
 			});
 		</script>
@@ -229,10 +229,11 @@
   						<br><br><br>
   					</div>
 				</div><!--End of the "area" div-->
-				<br><br>
+				
+			</form>
+			<br><br>
 			        <input type="submit" class="myButton" id="submit" style="display:none" />
 			        <br><br>
-			</form>
 			
 		</div>
 	</body>
