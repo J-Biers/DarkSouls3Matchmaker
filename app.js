@@ -44,7 +44,7 @@ function createTable(tableNameStr, fieldsStr)
 	dbConnection.query("CREATE TABLE IF NOT EXISTS " + tableNameStr + "(" + fieldsStr + ")");
 }
 
-function addHost(nameStr, platformID, hostResponse, bonfireID, addedTime)
+function addHost(nameStr, platformID, hostRequest, hostResponse, bonfireID, addedTime)
 {
 	//Adds a host
 	//Returns the hostID of the added host
@@ -62,6 +62,12 @@ function addHost(nameStr, platformID, hostResponse, bonfireID, addedTime)
 	dbConnection.query("INSERT INTO HostBonfires (HostID, BonfireID, Platform, AddedTime) VALUES (" + hostID + ", " + bonfireID + ", " + platformID + ", " + addedTime + ")");
 	console.log ("Inserted " + hostID + " into hostbonfires");
 	
+	//If the host disconnects, remove them
+	hostRequest.on("close", function()
+	{
+		removeHost(hostID);
+	});
+	
 	return hostID;
 }
 
@@ -72,7 +78,7 @@ function removeHost(hostID)
 	dbConnection.query("DELETE FROM HostBonfires WHERE HostID=" + hostID);
 }
 
-function addPhantom(nameStr, platformID, phantomResponse, bonfireIDList, addedTime)
+function addPhantom(nameStr, platformID, phantomRequest, phantomResponse, bonfireIDList, addedTime)
 {
 	//Adds a host
 	//Returns the phantomID of the added host
@@ -90,6 +96,12 @@ function addPhantom(nameStr, platformID, phantomResponse, bonfireIDList, addedTi
 	{
 		dbConnection.query("INSERT INTO PhantomBonfires (PhantomID, BonfireID, Platform, AddedTime) VALUES (" + phantomID + ", " + bonfireIDList[i] + ", " + platformID + ", " + addedTime + ")");
 	}
+	
+	//If the phantom disconnects, remove them
+	phantomRequest.on("close", function()
+	{
+		removeHost(phantomID);
+	});
 	
 	//Return phantomID
 	return phantomID;
@@ -117,7 +129,7 @@ function findMatchHost(hostID, hostName, platformID, bonfireID)
 	{
 		
 		//If there are no matches, return.  We'll wait for a match to happen.
-		if (Object.keys(results).length == 0)
+		if (results == null || Object.keys(results).length == 0)
 		{
 			return;
 		}
@@ -160,7 +172,7 @@ function findMatchPhantom(phantomID, phantomName, platformID, bonfireIDList)
 	dbConnection.query(queryStr, function (error, results, fields)
 	{
 		//If there are no matches, we'll wait for a match to happen
-		if (Object.keys(results).length == 0)
+		if (results == null || Object.keys(results).length == 0)
 		{
 			return;
 		}
@@ -257,6 +269,9 @@ dbConnection.connect(function(err)
 	dbConnection.query("USE ad_967b35b36ba55e1");
 	console.log("Using the correct database");
 	
+	//Drop all tables
+	dbConnection.query("DROP TABLE Hosts, Phantoms, HostBonfires, PhantomBonfires");
+	
 	//Create the table of hosts
 	createTable("Hosts", "HostID int, Name varchar(255)");
 	console.log("Created Hosts table");
@@ -297,7 +312,7 @@ app.get('/addClient', function (req, res)
 	if (req.query.clientType === 'Host')
 	{
 		//Add the host
-		var hostID = addHost(name, platformID, res, bonfireIDList[0], Date.now());
+		var hostID = addHost(name, platformID, req, res, bonfireIDList[0], Date.now());
 		
 		//Find a match
 		findMatchHost(hostID, name, platformID, bonfireIDList[0]);
@@ -305,7 +320,7 @@ app.get('/addClient', function (req, res)
 	else
 	{
 		//Add the phantom
-		var phantomID = addPhantom(name, platformID, res, bonfireIDList, Date.now());
+		var phantomID = addPhantom(name, platformID, req, res, bonfireIDList, Date.now());
 		
 		//Find a match
 		findMatchPhantom(phantomID, name, platformID, bonfireIDList);
