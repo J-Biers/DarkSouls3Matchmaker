@@ -113,9 +113,8 @@ function findMatchHost(hostID, hostName, platformID, bonfireID)
 	//If no matches were found, wait for one to happen.
 	
 	//Get all phantoms at the bonfire
-	dbConnection.query("SELECT PhantomID FROM PhantomBonfires WHERE BonfireID = " + bonfireID + " AND Platform = " + platformID + " ORDER BY AddedTime DESC", function (error, results, fields)
+	dbConnection.query("SELECT PhantomID FROM PhantomBonfires WHERE BonfireID = " + bonfireID + " AND Platform = " + platformID + " ORDER BY AddedTime ASC", function (error, results, fields)
 	{
-		console.log("Received response from phantom bonfire query");
 		
 		//If there are no matches, return.  We'll wait for a match to happen.
 		if (Object.keys(results).length == 0)
@@ -125,32 +124,62 @@ function findMatchHost(hostID, hostName, platformID, bonfireID)
 		
 		//Match with the first phantom found
 		var phantomID = results[0].PhantomID;
-		console.log("Got phantom ID: " + phantomID);
 		
 		//Get the phantom's name
 		dbConnection.query("SELECT Name FROM Phantoms WHERE PhantomID=" + phantomID, function (error, results, fields)
 		{
-			console.log("Received response from phantom name query");
-			
 			var phantomName = results[0].Name;
-			console.log("Extracted phantom name " + phantomName);
 			
 			//Send the match
 			sendMatch(bonfireID, hostID, phantomID, hostName, phantomName);
 		});
-		console.log("Sent query for phantomName with ID " + phantomID);
 		
 	});
-	console.log("Sent query to look for phantoms at bonfire " + bonfireID);
 }
 
 function findMatchPhantom(phantomID, phantomName, platformID, bonfireIDList)
 {
 	//Attempts to match the phantom with a host, then sends the match
 	//If no matches were found, wait for one to happen.
-	//TODO
 	
-	return;
+	//CURRENT TASK: Fixing this
+	
+	console.log("Finding match phantom");
+	
+	//Build the SQL query
+	var queryStr = "SELECT HostID, BonfireID, AddedTime FROM HostBonfires WHERE BonfireID=" + bonfireIDList[0];
+	for (i = 1; i < bonfireIDList.length; i++)
+	{
+		queryStr += " OR BonfireID=" + bonfireIDList[i];
+	}
+	
+	queryStr += " ORDER BY AddedTime ASC";
+	console.log("SQL: " + queryStr);
+	
+	//Send the query
+	dbConnection.query(queryStr, function (error, results, fields)
+	{
+		//If there are no matches, we'll wait for a match to happen
+		if (Object.keys(results).length == 0)
+		{
+			return;
+		}
+		
+		//Match with the first host found
+		var hostID = results[0].HostID;
+		var bonfireID = results[0].BonfireID;
+		
+		//Get the host's name
+		dbConnection.query("SELECT Name FROM Hosts WHERE HostID=" + hostID, function (error, results, fields)
+		{
+			var hostName = results[0].Name;
+			
+			//Send the match
+			sendMatch(bonfireID, hostID, phantomID, hostName, phantomName);
+		});
+		
+	});
+	
 }
 
 
@@ -263,7 +292,6 @@ app.get('/addClient', function (req, res)
 	var name = req.query.name;
 	var platformID = req.query.platform;
 	var bonfireIDList = extractBonfireArray(req.query);
-	console.log("First bonfire in array is " + bonfireIDList[0]);
 	
 	//Add the client
 	if (req.query.clientType === 'Host')
