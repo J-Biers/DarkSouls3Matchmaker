@@ -8,6 +8,7 @@
 		<script>
 			$(document).ready(function(){
 				//var bonfires = $.makeArray($("bonfire"));
+				var submit = false;
 				var bonfires = [];
 				$("bonfire").each(function(index, elem) {
 					bonfires.push($(this).text());
@@ -35,11 +36,20 @@
 				$("#checkall").change(function () {
     					$("input:checkbox").prop('checked', $(this).prop("checked"));
 				});
+				
 				$("#area").click(function() {
-			            $("#submit").fadeIn(); 
+					if (!submit) {
+			            $("#submit").fadeIn();
+			            submit = true;
+		        	}
+
 				});
+				
+
 				//var bonfires = $.makeArray($("bonfire"));
 				$("#submit").click(function() {
+					$("#submit").slideUp();
+					$("#waiting").slideDown();
 					$.ajax({
 						type: "GET",
 						url: "addClient",
@@ -49,7 +59,7 @@
 							alert("Host Name: " + response.hostName + "\nPhantom Name: " + response.phantomName + "\nBonfire: " + location + "\nPassword: " + response.password);
 						},
 						error: function() {
-							alert("error");
+							alert("Error!");
 						}
 					});
 				});
@@ -244,6 +254,7 @@
 			</form>
 			<br><br>
 			        <input type="submit" class="myButton" id="submit" style="display:none" />
+			        <h4 id="waiting" style="display:none">Waiting for server response</h4>
 			        <br><br>
 			
 		</div>
