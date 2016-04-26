@@ -7,9 +7,16 @@
 		</script>
 		<script>
 			$(document).ready(function(){
-			        $("#name").on("input", function() {
-					$("#host").slideDown();	
+				//var bonfires = $.makeArray($("bonfire"));
+				var bonfires = [];
+				$("bonfire").each(function(index, elem) {
+					bonfires.push($(this).text());
 				});
+				
+			    $("#name").on("input", function() {
+					$("#host").slideDown();
+				});
+				
 				$("#hp").on("click", function() {
 					$("#platform").slideDown();	
 				});
@@ -31,14 +38,18 @@
 				$("#area").click(function() {
 			            $("#submit").fadeIn(); 
 				});
-				var bonfires = $.makeArray($("bonfire"));
+				//var bonfires = $.makeArray($("bonfire"));
 				$("#submit").click(function() {
 					$.ajax({
 						type: "GET",
 						url: "addClient",
 						data: $("#info").serialize(),
 						success: function(response) {
-							alert("Host Name: " + response.hostName + "\nPhantom Name: " + response.phantomName);
+							var location = $(bonfires).get(response.bonfireID - 1);
+							alert("Host Name: " + response.hostName + "\nPhantom Name: " + response.phantomName + "\nBonfire: " + location + "\nPassword: " + response.password);
+						},
+						error: function() {
+							alert("error");
 						}
 					});
 				});
