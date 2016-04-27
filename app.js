@@ -287,9 +287,14 @@ dbConnection.connect(function(err)
 	//Create the table mapping phantoms to bonfires
 	createTable("PhantomBonfires", "PhantomID int, BonfireID int, Platform int, AddedTime int");
 	console.log("Created phatombonfires table");
-	
-	//TODO: Set up events for SQL
 });
+
+//Send a query to the database every 5 seconds to stop it from disconnecting
+//Genius solution courtesy of http://stackoverflow.com/questions/20210522/nodejs-mysql-error-connection-lost-the-server-closed-the-connection
+setInterval(function ()
+{
+	dbConnection.query("SELECT 1");
+}, 5000);
 
 // create a new express server
 var app = express();
